@@ -2,6 +2,7 @@
 // Best Practice Guidelines: https://nf-co.re/docs/contributing/modules
 
 include { SUMMARISE } from './workflows/summarise'
+include { FILTER } from './workflows/filter'
 include { PLINK_CONVERT } from './modules/plink_convert'
 
 workflow {
@@ -29,6 +30,16 @@ workflow {
   }
   
   SUMMARISE(plink)
+  FILTER(
+    plink,
+    params.missing_geno,
+    params.missing_indi,
+    params.maf,
+    params.hwe_control,
+    params.hwe_case,
+    params.het_sd,
+    params.pihat
+  )
 }
 
 

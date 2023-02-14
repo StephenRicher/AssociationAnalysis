@@ -48,4 +48,7 @@ workflow FILTER {
     PLINK_QC_HET_EXC.out, pihat)
 
   PLOT_HET(GET_HET_FAIL.out.all)
+
+  emit:
+  plink = PLINK_QC_RELATED.out
 }

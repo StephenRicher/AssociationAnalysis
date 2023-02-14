@@ -3,6 +3,7 @@
 
 include { SUMMARISE } from './workflows/summarise'
 include { FILTER } from './workflows/filter'
+include { BURDEN } from './workflows/burden'
 include { PLINK_CONVERT } from './modules/plink_convert'
 
 workflow {
@@ -39,6 +40,24 @@ workflow {
     params.hwe_case,
     params.het_sd,
     params.pihat
+  )
+
+  gff3 = Channel
+    .fromPath(params.gff3)
+    .ifEmpty { exit 1, "ERROR: Cannot find file: ${params.gff3}" }
+  pheno_file = Channel
+    .fromPath(params.pheno_file)
+    .ifEmpty { exit 1, "ERROR: Cannot find file: ${params.pheno_file}" }
+  covar_file = Channel
+    .fromPath(params.covar_file)
+  BURDEN(
+    FILTER.out.plink,
+    gff3,
+    params.key,
+    pheno_file,
+    params.pheno_name,
+    covar_file,
+    params.covar_name
   )
 }
 

@@ -14,15 +14,12 @@ include { PLINK_UPDATE_PHENO } from './modules/plink_update_pheno'
 
 workflow {
   // Validate mandatory parameters
-  params.each{ k, v -> if (v==null) { exit 1, "Error: parameter '$k' not set." } }
-  
-  // Get PLINK format files - read as [ variants, [ variants.bed, variants.bim, variants.fam ] ]
-  basename = Channel.fromPath( params.plink )
-  
+  params.each{ k, v -> if (v==null) { exit 1, "ERROR: parameter '$k' not set." } }
+
   // Recode to PLINK binary format if required
   if (!params.binary_format) {
     plink = Channel
-      .fromPath( "${params.plink}.{ped,map}" )
+      .fromPath( "${params.plink}.{ped,map}", checkIfExists: true)
       .collect()
       .map{ check_size(it, 2) }
       .map{ [it[0].simpleName, it ] }
@@ -30,7 +27,7 @@ workflow {
     plink = PLINK_CONVERT.out
   } else {
     plink = Channel
-      .fromPath( "${params.plink}.{bed,bim,fam}" )
+      .fromPath( "${params.plink}.{bed,bim,fam}", checkIfExists: true)
       .collect()
       .map{ check_size(it, 3) }
       .map{ [it[0].simpleName, it ] }
@@ -39,12 +36,11 @@ workflow {
   // Update phenotype if required
   if (params.pheno_file) {
     pheno = Channel
-      .fromPath(params.pheno_file)
-      .ifEmpty { exit 1, "ERROR: Cannot find file: ${params.pheno_file}" }
+      .fromPath(params.pheno_file, checkIfExists: true)
     if (params.pheno_name == '' ) {
-      exit 1, "ERROR: No pheno name provided for: ${pheno_file}"
+      exit 1, "ERROR: No pheno name provided for: ${params.pheno_file}"
     }
-    // Fix pheno format for comptability
+    // Fix pheno format for compatibility
     FIX_PHENO(pheno)
     // Update phenotype
     PLINK_UPDATE_PHENO(plink, FIX_PHENO.out, params.pheno_name)
@@ -76,9 +72,10 @@ workflow {
     params.het_sd
   )
 
+  // Read GFF3 file
   gff3 = Channel
-    .fromPath(params.gff3)
-    .ifEmpty { exit 1, "ERROR: Cannot find file: ${params.gff3}" }
+    .fromPath(params.gff3, checkIfExists: true)
+  // Perform association alaysis summary stats
   ASSOCIATION(
     FILTER.out.plink,
     gff3,

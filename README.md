@@ -41,7 +41,7 @@ The workflow also conducts automated QC filtering and visualisation.
 The pipeline comprises four key sub-workflows:
 
 ### summarise()
-The `summarise()` workflow generate summary statistics for the input data.
+The `summarise()` workflow generates summary statistics for the input data.
 
 * Missingness per SNP and individual
 * Minor Allele Frequency (MAF)

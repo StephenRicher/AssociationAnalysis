@@ -63,7 +63,9 @@ The `filter()` workflow conduct typical QC filtering. All filtering statistics, 
 The `plot_stats()` workflow generates visual summaries of the input data. Example data plots are saved to [./results/summary/plots/](./results/summary/plots/).
 
 ### association()
-The `association()` workflow conducts a CMV burden test and a SKAT test with optional covariates. A setFile is automatically generated from the user-provided GFF3 file. Grouping units are defined by genes (exonic regions only).  
+The `association()` workflow conducts a CMV burden test and a SKAT test with optional covariates. A setFile is automatically generated from the user-provided GFF3 file. Grouping units are defined by genes (exonic regions only).
+
+* The example outputs of both rvtest models are written to [./results/rvtest/](./results/rvtest/).
 
 ## Configuration
 See below and [./conf/defaults.config](./conf/defaults.config) for default parameters with descriptions. Users should set parameters in [./nextflow.config](./nextflow.config).

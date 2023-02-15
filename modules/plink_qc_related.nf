@@ -14,9 +14,10 @@ process PLINK_QC_RELATED {
     path '*.log', emit: log
 
     script:
+    def args = task.ext.args ?: ''
     """
-    plink \
+    plink $args \
         --bfile in/$prefix --make-bed --out $prefix \
-        --genome --min $threshold --allow-no-sex
+        --genome --min $threshold
     """
 }

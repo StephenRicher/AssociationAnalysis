@@ -1,0 +1,9 @@
+,loaded,loaded,loaded,loaded,loaded,loaded,retain,retain,removed,removed
+,variants,people,male,female,amiguous,phenotype,variants,people,variants,people
+missing_geno,17394,2504,0,0,2504,2504,14370,2504,3024,0
+missing_individual,14370,2504,0,0,2504,2504,14370,2504,0,0
+low_maf,14370,2504,0,0,2504,2504,7048,2504,7322,0
+hwe_control,7048,2504,0,0,2504,2504,5070,2504,1978,0
+hwe_case,5070,2504,0,0,2504,2504,5067,2504,3,0
+heterozygosity,5067,2504,0,0,2504,2504,5067,2479,0,25
+relatedness,5067,2479,0,0,2479,2479,5067,2479,0,0

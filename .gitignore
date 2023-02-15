@@ -1,4 +1,3 @@
-results/*
 data/*
 
 !data/genes_of_interest.exons.bed6

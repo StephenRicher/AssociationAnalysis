@@ -97,6 +97,7 @@ params {
     pheno_file   = ''        // Path to pheno file
     pheno_name   = ''        // Column name of phenotype
     zero_one     = false     // Set true if phenotype is encoded as '0' = control and '1' = case
+    allow_no_sex = true      // Prevent phenotypes set to missing if amiguous sex.
 }   
 ```
 

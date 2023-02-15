@@ -1,6 +1,6 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Apply Skat kernel method, optional covariates
+    Apply SKAT kernel method, optional covariates
 ------------------------------------------------------------------------------
 */
 

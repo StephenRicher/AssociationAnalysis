@@ -5,6 +5,8 @@ include { SUMMARISE } from './workflows/summarise'
 include { FILTER } from './workflows/filter'
 include { BURDEN } from './workflows/burden'
 include { PLINK_CONVERT } from './modules/plink_convert'
+include { FIX_PHENO } from './modules/fix_pheno'
+include { PLINK_UPDATE_PHENO } from './modules/plink_update_pheno'
 
 workflow {
   // Validate mandatory parameters
@@ -13,7 +15,7 @@ workflow {
   // Get PLINK format files - read as [ variants, [ variants.bed, variants.bim, variants.fam ] ]
   basename = Channel.fromPath( params.plink )
   
-  // Recode to binary format if required
+  // Recode to PLINK binary format if required
   if (!params.binary_format) {
     plink = Channel
       .fromPath( "${params.plink}.{ped,map}" )
@@ -21,7 +23,7 @@ workflow {
       .map{ check_size(it, 2) }
       .map{ [it[0].simpleName, it ] }
     PLINK_CONVERT(plink) 
-    plink = PLINK_CONVERT.out.plink
+    plink = PLINK_CONVERT.out
   } else {
     plink = Channel
       .fromPath( "${params.plink}.{bed,bim,fam}" )
@@ -29,7 +31,20 @@ workflow {
       .map{ check_size(it, 3) }
       .map{ [it[0].simpleName, it ] }
   }
-  
+
+  // Update phenotype if required
+  if (params.pheno_file) {
+    pheno = Channel
+      .fromPath(params.pheno_file)
+      .ifEmpty { exit 1, "ERROR: Cannot find file: ${params.pheno_file}" }
+    if (params.pheno_name == '' ) {
+      exit 1, "ERROR: No pheno name provided for: ${pheno_file}"
+    }
+    FIX_PHENO(pheno)
+    PLINK_UPDATE_PHENO(plink, FIX_PHENO.out, params.pheno_name)
+    plink = PLINK_UPDATE_PHENO.out
+  }
+
   SUMMARISE(plink)
   FILTER(
     plink,
@@ -45,18 +60,11 @@ workflow {
   gff3 = Channel
     .fromPath(params.gff3)
     .ifEmpty { exit 1, "ERROR: Cannot find file: ${params.gff3}" }
-  pheno_file = Channel
-    .fromPath(params.pheno_file)
-    .ifEmpty { exit 1, "ERROR: Cannot find file: ${params.pheno_file}" }
-  covar_file = Channel
-    .fromPath(params.covar_file)
   BURDEN(
     FILTER.out.plink,
     gff3,
     params.key,
-    pheno_file,
-    params.pheno_name,
-    covar_file,
+    params.covar_file,
     params.covar_name
   )
 }

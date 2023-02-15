@@ -3,10 +3,10 @@ process PLINK_TO_VCF {
     tuple val(prefix), path(data)
 
     output:
-    tuple val(prefix), path('*.vcf')
+    tuple val(prefix), path('*.vcf.gz')
 
     script:
     """
-    plink --bfile $prefix --recode vcf --out $prefix
+    plink --bfile $prefix --recode vcf-iid bgz --out $prefix
     """
 }

@@ -1,12 +1,12 @@
 process PLINK_CONVERT {
     input:
-    tuple val(prefix), path(data)
+    tuple val(prefix), path(data, stageAs: "in/*")
 
     output:
-    tuple val(prefix), path('*.{bed,bim,fam}'), emit: plink
+    tuple val(prefix), path('*.{bed,bim,fam}')
 
     script:
     """
-    plink --file $prefix --make-bed --out $prefix
+    plink --file in/$prefix --make-bed --out $prefix
     """
 }

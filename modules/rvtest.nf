@@ -1,29 +1,22 @@
 process RVTEST {
     input:
-    tuple val(prefix), path(data)
+    tuple val(prefix), path(plink)
+    tuple val(prefix), path(vcf)
+    tuple val(prefix), path(vcf_idx)
     path setFile
-    path pheno_file
-    val pheno_name
-    path covar_file, stageAs: 'covar'
+    path covar
     val covar_name
 
     output:
-    tuple val("${prefix}-geno"), path('*.{bed,bim,fam}')
+    tuple val(prefix), path('*.assoc')
 
     script:
-    if( covar_name == '' || covar_file == '')
-        """
-        rvtest \
-            --inVcf $data --setFile $setFile --out output \
-            --pheno $pheno_file --pheno-name $pheno_name \
-            --burden cmc --kernel skat
-        """
-    else
-        """
-        rvtest \
-            --covar $covar_file --covar-name ${covar_name.join(',')} \
-            --inVcf $data --setFile $setFile --out output \
-            --pheno $pheno_file --pheno-name $pheno_name \
-            --burden cmc --kernel skat
-        """
+    def args = covar.name != 'NO_FILE' ? "--covar $covar --covar-name ${covar_name.join(',')}" : ''
+    """
+    rvtest --noweb $args \
+        --inVcf $vcf --setFile $setFile --out output \
+        --pheno ${prefix}.fam \
+        --burden cmc --kernel skat 
+    """
 }
+

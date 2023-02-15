@@ -8,6 +8,6 @@ process PLINK_QC_RELATED {
 
     script:
     """
-    plink --bfile $prefix --genome --min $threshold --make-bed --out $prefix-related
+    plink --allow-no-sex --bfile $prefix --genome --min $threshold --make-bed --out $prefix-related
     """
 }

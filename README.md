@@ -33,7 +33,7 @@ The workflow also conducts automated QC filtering and visualisation.
    nextflow run main.nf -profile docker
    ```
 
-   The pipeline includes an example [dataset](./data/) and a pre-configured [./nextflow.config](./nextflow.config) with reasonable default parameters for testing.
+   > - The pipeline includes an example [dataset](./data/) and a pre-configured [./nextflow.config](./nextflow.config) with reasonable default parameters for testing.
 
    > - The pipeline includes a config profile called `docker`, which instruct the pipeline to utilise containers for processes management.
 

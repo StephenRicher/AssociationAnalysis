@@ -10,7 +10,8 @@ include { PLINK_TO_VCF } from '../modules/plink_to_vcf'
 include { INDEX_VCF } from '../modules/index_vcf'
 include { FIX_PHENO } from '../modules/fix_pheno'
 include { MAKE_COVAR } from '../modules/make_covar'
-include { RVTEST } from '../modules/rvtest'
+include { RVTEST_SKAT } from '../modules/rvtest_skat'
+include { RVTEST_CMC } from '../modules/rvtest_cmc'
 
 workflow BURDEN {
   take:
@@ -38,12 +39,18 @@ workflow BURDEN {
   } else {
     covar_file = file(covar_file)
   }
-  RVTEST(
+  RVTEST_SKAT(
     plink,
     PLINK_TO_VCF.out,
     INDEX_VCF.out,
     GFF3_TO_EXON_SET.out,
     covar_file,
     covar_name
+  )
+  RVTEST_CMC(
+    plink,
+    PLINK_TO_VCF.out,
+    INDEX_VCF.out,
+    GFF3_TO_EXON_SET.out,
   )
 }

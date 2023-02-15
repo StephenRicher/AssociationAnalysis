@@ -19,7 +19,7 @@ process PLOT_MAF {
     import seaborn as sns
     import matplotlib.pyplot as plt
 
-    maf = pd.read_csv('${maf}', sep='\s+')
+    maf = pd.read_csv('${maf}', sep='\\s+')
     fig, ax = plt.subplots()
     sns.histplot(maf['MAF'], stat='density', ax=ax)
     ax.set_xlabel('Minor Allele Frequency (MAF)')

@@ -19,7 +19,7 @@ process PLOT_HWE {
     import seaborn as sns
     import matplotlib.pyplot as plt
 
-    hwe = pd.read_csv('${hwe}', sep='\s+')
+    hwe = pd.read_csv('${hwe}', sep='\\s+')
     fig, ax = plt.subplots()
     sns.histplot(hwe['P'], stat='density', ax=ax)
     ax.set_xlabel('Hardy-Weinberg Equilibrium (p-values)')

@@ -71,13 +71,13 @@ workflow {
   gff3 = Channel
     .fromPath(params.gff3)
     .ifEmpty { exit 1, "ERROR: Cannot find file: ${params.gff3}" }
-  //BURDEN(
-  //  FILTER.out.plink,
-  //  gff3,
-  //  params.key,
-  //  params.covar_file,
-  //  params.covar_name
-  //)
+  BURDEN(
+    FILTER.out.plink,
+    gff3,
+    params.key,
+    params.covar_file,
+    params.covar_name
+  )
 }
 
 

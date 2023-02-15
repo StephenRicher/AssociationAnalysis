@@ -30,7 +30,7 @@ process PLOT_MIND_HET {
     data = pd.merge(het, imiss, left_on='IID', right_on='IID')
 
     fig, ax = plt.subplots()
-    sns.scatterplot(data, x='F_MISS', y='HET_RATE', hue=col)
+    sns.scatterplot(data=data, x='F_MISS', y='HET_RATE', hue=col)
     ax.set_xlabel('Proportion of missing genotypes per individual')
     ax.set_ylabel('Heterozygosity rate per individual')
     fig.tight_layout()

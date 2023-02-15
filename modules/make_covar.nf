@@ -20,14 +20,13 @@ process MAKE_COVAR {
     import sys
     import pandas as pd
 
-    covar_names = sys.argv[1:]
+    covar_names = ${covar_name.collect{ '"' + it + '"'}}
     covar = pd.read_csv('${covar}', sep='\\s+')
     iid = covar.columns[1]
     covar = covar[[iid] + covar_names]
 
     fam_cols = ['FID', 'IID', 'fatid', 'matid', 'sex', 'phenotype']
-    fam = pd.read_csv('${prefix}.fam', names=fam_cols, sep='\s+')
-
+    fam = pd.read_csv('${prefix}.fam', names=fam_cols, sep='\\s+')
     covar = pd.merge(fam, covar, left_on='IID', right_on='IID', how='left')
     covar.to_csv('covar.phe', index=False, sep='\\t')
     """

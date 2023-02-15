@@ -7,6 +7,6 @@ process PLINK_TO_VCF {
 
     script:
     """
-    plink --bfile $prefix --recode vcf-iid bgz --out $prefix
+    plink --bfile $prefix --out $prefix --recode vcf-iid bgz 
     """
 }

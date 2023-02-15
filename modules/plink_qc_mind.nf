@@ -1,13 +1,14 @@
 process PLINK_QC_MIND {
     input:
-    tuple val(prefix), path(data)
+    tuple val(prefix), path(data, stageAs: "in/*")
     val threshold
 
     output:
-    tuple val("${prefix}-mind"), path('*.{bed,bim,fam}')
+    tuple val(prefix), path('*.{bed,bim,fam}'), emit: plink
+    path '*.log', emit: log
 
     script:
     """
-    plink --bfile $prefix --mind $threshold --make-bed --out $prefix-mind
+    plink --bfile in/$prefix --make-bed --out $prefix --mind $threshold 
     """
 }

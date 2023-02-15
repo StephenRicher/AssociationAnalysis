@@ -3,6 +3,7 @@
 
 include { SUMMARISE } from './workflows/summarise'
 include { FILTER } from './workflows/filter'
+include { PLOT_STATS } from './workflows/plot_stats'
 include { BURDEN } from './workflows/burden'
 include { PLINK_CONVERT } from './modules/plink_convert'
 include { FIX_PHENO } from './modules/fix_pheno'
@@ -46,6 +47,7 @@ workflow {
   }
 
   SUMMARISE(plink)
+
   FILTER(
     plink,
     params.missing_geno,
@@ -57,16 +59,25 @@ workflow {
     params.pihat
   )
 
+  PLOT_STATS(
+    SUMMARISE.out.imiss,
+    SUMMARISE.out.lmiss,
+    SUMMARISE.out.hwe,
+    SUMMARISE.out.maf,
+    FILTER.out.heterozygosity,
+    params.het_sd
+  )
+
   gff3 = Channel
     .fromPath(params.gff3)
     .ifEmpty { exit 1, "ERROR: Cannot find file: ${params.gff3}" }
-  BURDEN(
-    FILTER.out.plink,
-    gff3,
-    params.key,
-    params.covar_file,
-    params.covar_name
-  )
+  //BURDEN(
+  //  FILTER.out.plink,
+  //  gff3,
+  //  params.key,
+  //  params.covar_file,
+  //  params.covar_name
+  //)
 }
 
 

@@ -13,9 +13,9 @@ process RVTEST {
     script:
     def args = covar.name != 'NO_FILE' ? "--covar $covar --covar-name ${covar_name.join(',')}" : ''
     """
-    rvtest --noweb $args \
-        --inVcf $vcf --setFile $setFile --out output \
-        --pheno ${prefix}.fam \
+    rvtest $args \
+        --inVcf $vcf --out $prefix --noweb \
+        --setFile $setFile  --pheno ${prefix}.fam \
         --burden cmc --kernel skat 
     """
 }

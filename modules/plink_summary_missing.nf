@@ -8,6 +8,6 @@ process PLINK_SUMMARY_MISSING {
 
     script:
     """
-    plink --bfile $prefix --missing --out $prefix
+    plink --bfile $prefix --out $prefix --missing 
     """
 }

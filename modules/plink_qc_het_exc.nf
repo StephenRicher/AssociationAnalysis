@@ -1,13 +1,14 @@
 process PLINK_QC_HET_EXC {
     input:
-    tuple val(prefix), path(data)
+    tuple val(prefix), path(data, stageAs: "in/*")
     tuple val(prefix), path(exclude)
 
     output:
-    tuple val("${prefix}-het"), path('*.{bed,bim,fam}')
+    tuple val(prefix), path('*.{bed,bim,fam}'), emit: plink
+    path '*.log', emit: log
 
     script:
     """
-    plink --bfile $prefix --remove $exclude --make-bed --out $prefix-het
+    plink --bfile in/$prefix --make-bed --out $prefix --remove $exclude 
     """
 }

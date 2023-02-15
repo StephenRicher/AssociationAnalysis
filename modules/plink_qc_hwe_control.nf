@@ -1,13 +1,14 @@
 process PLINK_QC_HWE_CONTROL {
     input:
-    tuple val(prefix), path(data)
+    tuple val(prefix), path(data, stageAs: "in/*")
     val threshold
 
     output:
-    tuple val("${prefix}-hwe_control"), path('*.{bed,bim,fam}')
+    tuple val(prefix), path('*.{bed,bim,fam}'), emit: plink
+    path '*.log', emit: log
 
     script:
     """
-    plink --bfile $prefix --hwe $threshold --make-bed --out $prefix-hwe_control
+    plink --bfile in/$prefix --make-bed --out $prefix --hwe $threshold 
     """
 }

@@ -7,6 +7,6 @@ process PLINK_QC_HET {
 
     script:
     """
-    plink --bfile $prefix --het --out ${prefix}
+    plink --bfile $prefix --out $prefix --het 
     """
 }

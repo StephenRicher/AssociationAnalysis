@@ -1,13 +1,14 @@
 process PLINK_QC_MAF {
     input:
-    tuple val(prefix), path(data)
+    tuple val(prefix), path(data, stageAs: "in/*")
     val threshold
 
     output:
-    tuple val("${prefix}-maf"), path('*.{bed,bim,fam}')
+    tuple val(prefix), path('*.{bed,bim,fam}'), emit: plink
+    path '*.log', emit: log
 
     script:
     """
-    plink --bfile $prefix --maf $threshold --make-bed --out $prefix-maf
+    plink --bfile in/$prefix --make-bed --out $prefix --maf $threshold 
     """
 }

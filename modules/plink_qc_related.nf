@@ -1,3 +1,9 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Filter individuals by relatedness (pi‐hat threshold)
+------------------------------------------------------------------------------
+*/
+
 process PLINK_QC_RELATED {
     input:
     tuple val(prefix), path(data, stageAs: "in/*")

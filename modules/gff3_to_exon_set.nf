@@ -1,3 +1,9 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Convert GFF3 to setFile of gene groupings (exonic regions only)
+------------------------------------------------------------------------------
+*/
+
 process GFF3_TO_EXON_SET {
     input:
     path gff3

@@ -1,3 +1,9 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Apply Skat kernel method, optional covariates
+------------------------------------------------------------------------------
+*/
+
 process RVTEST_SKAT {
     input:
     tuple val(prefix), path(plink)

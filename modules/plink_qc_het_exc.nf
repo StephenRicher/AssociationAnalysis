@@ -1,3 +1,9 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Exclude individuals with highly deviating heterozygosity
+------------------------------------------------------------------------------
+*/
+
 process PLINK_QC_HET_EXC {
     input:
     tuple val(prefix), path(data, stageAs: "in/*")

@@ -1,3 +1,9 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Assess missingness per SNP and individual
+------------------------------------------------------------------------------
+*/
+
 process PLINK_SUMMARY_MISSING {
     input:
     tuple val(prefix), path(data)

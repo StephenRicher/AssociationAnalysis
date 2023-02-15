@@ -1,3 +1,9 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Filter individuals with high missingness
+------------------------------------------------------------------------------
+*/
+
 process PLINK_QC_MIND {
     input:
     tuple val(prefix), path(data, stageAs: "in/*")

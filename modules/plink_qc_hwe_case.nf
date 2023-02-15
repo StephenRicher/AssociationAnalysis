@@ -1,3 +1,9 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Exclude SNPS not in HWE (case samples, less stringent)
+------------------------------------------------------------------------------
+*/
+
 process PLINK_QC_HWE_CASE {
     input:
     tuple val(prefix), path(data, stageAs: "in/*")

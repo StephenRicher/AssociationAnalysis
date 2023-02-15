@@ -1,3 +1,9 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Exclude SNPS not in HWE (control samples, more stringent)
+------------------------------------------------------------------------------
+*/
+
 process PLINK_QC_HWE_CONTROL {
     input:
     tuple val(prefix), path(data, stageAs: "in/*")

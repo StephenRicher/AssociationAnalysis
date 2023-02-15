@@ -1,3 +1,9 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Get individuals with highly deviating heterozygosity
+------------------------------------------------------------------------------
+*/
+
 process GET_HET_FAIL {
     input:
     tuple val(prefix), path(data)

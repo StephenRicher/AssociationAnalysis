@@ -31,8 +31,7 @@ workflow ASSOCIATION {
   // Validate optiona covariate file
   if (covar_file != 'NO_FILE') {
     covar_file = Channel
-      .fromPath(covar_file)
-      .ifEmpty { exit 1, "ERROR: Cannot find file: ${covar_file}" }
+      .fromPath(covar_file, checkIfExists: true)
     if (!covar_name) {
       exit 1, "ERROR: covar_name not set."
     }

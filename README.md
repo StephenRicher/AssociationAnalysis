@@ -33,7 +33,7 @@ The workflow also conducts automated QC filtering and visualisation.
    nextflow run main.nf -profile docker
    ```
 
-   The pipeline includes an example [dataset](./data/) and pre-configured [configuration file]('./nextflow.config') with reasonable default parameters for testing.
+   The pipeline includes an example [dataset](./data/) and a pre-configured [./nextflow.config](./nextflow.config) with reasonable default parameters for testing.
 
    > - The pipeline includes a config profile called `docker`, which instruct the pipeline to utilise containers for processes management.
 
@@ -48,7 +48,7 @@ The `summarise()` workflow generate summary statistics for the input data.
 * Hardy-Weinberg equilibrium (HWE)
 
 ### filter()
-The `filter()` workflow conduct typical QC filtering. All filtering statistics, including an [aggregated report]('./results/summary/filter-summary.csv'), are written to the [output directory]('./results/summary/')
+The `filter()` workflow conduct typical QC filtering. All filtering statistics, including an [aggregated report](./results/summary/filter-summary.csv), are written to the [./results/summary/](./results/summary/)
 
 * Filter SNPs with high missingness
 * Filter individuals with high missingness
@@ -60,13 +60,13 @@ The `filter()` workflow conduct typical QC filtering. All filtering statistics, 
 * Filter individuals by relatedness (pi‐hat threshold)
 
 ### plot_stats()
-The `plot_stats()` workflow generates visual summaries of the input data. Plots are saved to the [output directory]('./results/summary/plots').
+The `plot_stats()` workflow generates visual summaries of the input data. Example data plots are saved to [./results/summary/plots/](./results/summary/plots/).
 
 ### association()
 The `association()` workflow conducts a CMV burden test and a SKAT test with optional covariates. A setFile is automatically generated from the user-provided GFF3 file. Grouping units are defined by genes (exonic regions only).  
 
 ## Configuration
-See below and [here]('./conf/defaults.config') for default parameters with descriptions. Users should set parameters in the main [configuration file]('./nextflow.config').
+See below and [./conf/defaults.config](./conf/defaults.config) for default parameters with descriptions. Users should set parameters in [./nextflow.config](./nextflow.config).
 
 ```
 // Default parameters - mandatory set to null

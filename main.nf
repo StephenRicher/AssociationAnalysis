@@ -1,10 +1,13 @@
-// RNA-NextFlow
-// Best Practice Guidelines: https://nf-co.re/docs/contributing/modules
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Nextflow - QC, Filtering and Association Analysis
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 
 include { SUMMARISE } from './workflows/summarise'
 include { FILTER } from './workflows/filter'
 include { PLOT_STATS } from './workflows/plot_stats'
-include { BURDEN } from './workflows/burden'
+include { ASSOCIATION } from './workflows/association'
 include { PLINK_CONVERT } from './modules/plink_convert'
 include { FIX_PHENO } from './modules/fix_pheno'
 include { PLINK_UPDATE_PHENO } from './modules/plink_update_pheno'
@@ -41,13 +44,17 @@ workflow {
     if (params.pheno_name == '' ) {
       exit 1, "ERROR: No pheno name provided for: ${pheno_file}"
     }
+    // Fix pheno format for comptability
     FIX_PHENO(pheno)
+    // Update phenotype
     PLINK_UPDATE_PHENO(plink, FIX_PHENO.out, params.pheno_name)
     plink = PLINK_UPDATE_PHENO.out
   }
 
+  // Generate general summary of variants
   SUMMARISE(plink)
-
+  
+  // QC filtering steps
   FILTER(
     plink,
     params.missing_geno,
@@ -59,6 +66,7 @@ workflow {
     params.pihat
   )
 
+  // Plot summary stats
   PLOT_STATS(
     SUMMARISE.out.imiss,
     SUMMARISE.out.lmiss,
@@ -71,7 +79,7 @@ workflow {
   gff3 = Channel
     .fromPath(params.gff3)
     .ifEmpty { exit 1, "ERROR: Cannot find file: ${params.gff3}" }
-  BURDEN(
+  ASSOCIATION(
     FILTER.out.plink,
     gff3,
     params.key,
@@ -80,7 +88,7 @@ workflow {
   )
 }
 
-
+// Validate input file count
 def check_size(List samples, n) {
   if (samples.size() != n) {
     exit 1, "ERROR: Expected ${n} PLINK files."
